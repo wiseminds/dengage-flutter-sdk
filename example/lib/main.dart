@@ -35,8 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String contactKey = '';
   var contactKeyController = TextEditingController();
-
-static const EventChannel eventChannel = EventChannel("com.dengage.flutter/onNotificationClicked");
+  
 
   void _onEvent(Object event) {
     print("in on Event object is: ");
@@ -57,7 +56,7 @@ static const EventChannel eventChannel = EventChannel("com.dengage.flutter/onNot
     // print("setting screen name.");
     // DengageFlutter.setNavigationWithName('MainScreen');
 
-    eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
+    DengageFlutter.eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
 
     super.initState();
   }
@@ -185,15 +184,15 @@ static const EventChannel eventChannel = EventChannel("com.dengage.flutter/onNot
               padding: EdgeInsets.only(top: 10.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  String subscription = await DengageFlutter.getSubscription();
+                  var subscription = await DengageFlutter.getSubscription();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(subscription),
+                      content: Text(subscription.toString()),
                       action: SnackBarAction(
                         label: 'copy',
                         onPressed: () {
                           Clipboard.setData(
-                              new ClipboardData(text: subscription));
+                              new ClipboardData(text: subscription.toString()));
                         },
                       ),
                     ),
