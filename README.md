@@ -20,7 +20,7 @@ a) Edit your project's `pubspec.yaml` file to include the `dengage_flutter` SDK:
 ```sh
 
 dependencies:
-    dengage_flutter: ^0.0.6
+    dengage_flutter: ^0.0.8
     
 ```
 
@@ -390,11 +390,32 @@ To validate your inputs you can enable SDK’s log by a method.
 DengageFlutter.setLogStatus(isVisible)
 ```
 
-### Handling Notification Action Callback
-SDK provides a method if you want to get and parse payload manually for custom parameters or etc.
+### Handling Notification Action using onNotificationClicked event
+SDK provides a listener if you want to get and parse payload manually, whenever a push notification is clicked.
 
 ```
-Object result = await DengageFlutter.handleNotificationActionBlock()
+// declare as class level static variable
+  static const EventChannel eventChannel = EventChannel("com.dengage.flutter/onNotificationClicked");
+
+  @override
+  void initState() {
+    // rest of code here ...
+
+    eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
+
+    super.initState();
+  }
+
+  void _onEvent(Object event) {
+    print("in on Event object is: ");
+    print(event);
+  }
+
+  void _onError(Object error) {
+    print("in on Error Object is: ");
+    print(error);
+  }
+
 ```
 
 ### DeepLinking
