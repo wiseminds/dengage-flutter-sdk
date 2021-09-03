@@ -287,13 +287,12 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
                 reqContent["targetContentIdentifier"] = notificationResponse.notification.request.content.targetContentIdentifier
             }
 
-
             reqContent["attachments"] = contentAttachments
             notificationReq["content"] = reqContent
             notification["request"] = notificationReq
             response["notification"] = notification
 
-            eventSink(notificationResponse.notification.request.content.userInfo as!  [NSString : Any])
+            result(notificationResponse.notification.request.content.userInfo as!  [NSString : Any])
         }
     }
     
