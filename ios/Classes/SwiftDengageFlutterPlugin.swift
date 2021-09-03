@@ -293,7 +293,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             notification["request"] = notificationReq
             response["notification"] = notification
 
-            result([response])
+            eventSink(notificationResponse.notification.request.content.userInfo as!  [NSString : Any])
         }
     }
     
@@ -546,7 +546,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             guard let eventSink = self.eventSink else {
               return
             }
-            eventSink([response])
+            eventSink(notificationResponse.notification.request.content.userInfo as!  [NSString : Any])
         }
     }
 
