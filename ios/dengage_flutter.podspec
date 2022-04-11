@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/dengage-tech/dengage-ios-sdk.git', :tag => s.version.to_s }
 
   s.dependency 'Dengage', '~> 5.0.0'
-  s.dependency "Dengage.Framework.Extensions"
+  s.dependency "Dengage.Framework.Extensions", '1.0.10'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
