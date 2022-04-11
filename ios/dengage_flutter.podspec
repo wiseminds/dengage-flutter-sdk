@@ -17,7 +17,7 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
-  s.dependency "Dengage.Framework" , "~>5.0.0"
+  s.dependency "Dengage.Framework" #, "~>5.0.0"
   s.dependency "Dengage.Framework.Extensions"
 
   # Flutter.framework does not contain a i386 slice.
