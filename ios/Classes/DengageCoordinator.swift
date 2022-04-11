@@ -7,7 +7,7 @@
 
 import Foundation
 import Flutter
-import Dengage_Framework
+import Dengage
 
 @objc(DengageCoordinator)
 public class DengageCoordinator: NSObject {
@@ -28,20 +28,9 @@ public class DengageCoordinator: NSObject {
         Dengage.promptForPushNotifications()
     }
     
+
     @objc(registerForPushToken:)
     public func registerForPushToken(deviceToken: Data) {
-        var token = "";
-        if #available(iOS 13.0, *){
-            token = deviceToken.map { String(format: "%02x", $0) }.joined()
-        }
-        else {
-            let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
-            token = tokenParts.joined()
-        }
-        sendToken(token)
-    }
-    
-    private func sendToken(_ token: String ){
-        Dengage.setToken(token: token)
+       Dengage.register(deviceToken: token)
     }
 }

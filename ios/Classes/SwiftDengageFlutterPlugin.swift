@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import Dengage_Framework
+import Dengage
 
 enum EventChannelName {
   static let onNotificationClicked = "com.dengage.flutter/onNotificationClicked"
@@ -38,7 +38,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             result("iOS " + UIDevice.current.systemVersion)
             break;
     case "dEngage#setIntegerationKey":
-        self.setIntegrationKey(call: call, result: result)
+        self.start(call: call, result: result)
         break;
     case "dEngage#promptForPushNotifications":
         self.promptForPushNotifications(call: call, result: result)
@@ -139,7 +139,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             return
         }
         print("key is non-null & is not empty and is: \(key)")
-        Dengage.setIntegrationKey(key: key as! String)
+        Dengage.start(key: key as! String)
         result(true)
     }
     
