@@ -18,7 +18,7 @@ A new flutter plugin project.
   s.platform = :ios, '8.0'
 
   s.source = {
-    :git => 'https://github.com/wiseminds/userleap_flutter.git',
+    :git => 'https://github.com/dengage-tech/dengage-ios-sdk.git',
     :tag => s.version
   } 
 
