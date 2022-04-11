@@ -15,9 +15,9 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '8.0'
+  s.platform = :ios, '10.3'
 
-  s.dependency "Dengage.Framework"
+  s.dependency "Dengage.Framework" , "~>5.0.0"
   s.dependency "Dengage.Framework.Extensions"
 
   # Flutter.framework does not contain a i386 slice.
