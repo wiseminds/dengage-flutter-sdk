@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'dengage_flutter'
-  s.version          = '0.0.1'
+  s.version          = '5.0.0'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -22,7 +22,7 @@ A new flutter plugin project.
     :tag => s.version
   } 
 
-  s.dependency "Dengage.Framework" , "~>5.0.0"
+  s.dependency "Dengage.Framework" #, "~>5.0.0"
   s.dependency "Dengage.Framework.Extensions"
 
   # Flutter.framework does not contain a i386 slice.
