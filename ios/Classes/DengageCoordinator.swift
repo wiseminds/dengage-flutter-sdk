@@ -31,6 +31,6 @@ public class DengageCoordinator: NSObject {
 
     @objc(registerForPushToken:)
     public func registerForPushToken(deviceToken: Data) {
-       Dengage.register(deviceToken: token)
+       Dengage.register(token: deviceToken)
     }
 }

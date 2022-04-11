@@ -38,7 +38,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             result("iOS " + UIDevice.current.systemVersion)
             break;
     case "dEngage#setIntegerationKey":
-        self.start(call: call, result: result)
+//        self.start(call: call, result: result)
         break;
     case "dEngage#promptForPushNotifications":
         self.promptForPushNotifications(call: call, result: result)
@@ -130,18 +130,18 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      Function to set Integeration key
         to the value from argument.
      */
-    private func setIntegrationKey (call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let arguments = call.arguments as! NSDictionary
-        let key = arguments["key"] as! String
-        if (key == nil || key.isEmpty) {
-            print("key is empty or missing.")
-            result(FlutterError.init(code: "error", message: "Required argument 'key' is missing or empty.", details: nil))
-            return
-        }
-        print("key is non-null & is not empty and is: \(key)")
-        Dengage.start(key: key as! String)
-        result(true)
-    }
+//    private func start (call: FlutterMethodCall, result: @escaping FlutterResult) {
+//        let arguments = call.arguments as! NSDictionary
+//        let key = arguments["key"] as! String
+//        if (key == nil || key.isEmpty) {
+//            print("key is empty or missing.")
+//            result(FlutterError.init(code: "error", message: "Required argument 'key' is missing or empty.", details: nil))
+//            return
+//        }
+//        print("key is non-null & is not empty and is: \(key)")
+//        Dengage.start(apiKey: key as! String)
+//        result(true)
+//    }
     
     /**
      Function to prompt push permission
@@ -171,7 +171,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             result(FlutterError.init(code: "error", message: "Required argument 'permission' is missing.", details: nil))
             return
         }
-        Dengage.setUserPermission(permission: permission)
+        Dengage.set(permission: permission)
+        
         result(nil)
     }
     
@@ -185,7 +186,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             result(FlutterError.init(code: "error", message: "Required argument 'enabled' is missing.", details: nil))
             return
         }
-        Dengage.registerForRemoteNotifications(enable: enabled)
+//        Dengage.registerForRemoteNotifications(enable: enabled)
         result(nil)
     }
     
@@ -193,7 +194,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      Method to getToken
      */
     private func getToken (call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let token = Dengage.getToken()
+        let token = Dengage.getDeviceToken()
         result(token)
     }
 
@@ -215,7 +216,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             result(FlutterError.init(code: "error", message: "Required argument 'token' is missing.", details: nil))
             return
         }
-        Dengage.setToken(token: token)
+//        Dengage.register(deviceToken: token)
         result(nil)
     }
 
@@ -225,7 +226,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
     private func setLogStatus (call: FlutterMethodCall, result: @escaping FlutterResult) {
         let arguments = call.arguments as! NSDictionary
         let isVisible = arguments["isVisible"] as! Bool
-        Dengage.setLogStatus(isVisible: isVisible)
+        Dengage.setLog(isVisible:  isVisible)
         result(nil)
     }
 
@@ -235,7 +236,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
     private func setContactKey (call: FlutterMethodCall, result: @escaping FlutterResult) {
         let arguments = call.arguments as! NSDictionary
         let contactKey = arguments["contactKey"] as! String
-        Dengage.setContactKey(contactKey: contactKey)
+        Dengage.set(contactKey: contactKey)
         result(nil)
     }
     
@@ -302,7 +303,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
     func pageView (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
         let data = arguments["data"] as! NSDictionary
-        DengageEvent.shared.pageView(params: data as! NSMutableDictionary)
+        Dengage.pageView(parameters:  data  as! [String : Any])
         result(nil)
     }
 
@@ -311,8 +312,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func addToCart (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.addToCart(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.addToCart(parameters: data)
     }
     
     /**
@@ -320,8 +321,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func removeFromCart (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.removeFromCart(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.removeFromCart(parameters: data)
     }
     
     /**
@@ -329,8 +330,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func viewCart (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.viewCart(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.viewCart(parameters: data)
     }
 
     /**
@@ -338,8 +339,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func beginCheckout (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.beginCheckout(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.beginCheckout(parameters:  data)
     }
 
     /**
@@ -347,8 +348,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func placeOrder (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.order(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.order(parameters:  data)
     }
 
     /**
@@ -356,8 +357,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func cancelOrder (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.cancelOrder(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.cancelOrder(parameters: data)
     }
     
     /**
@@ -365,8 +366,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func addToWithList (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.addToWithList(params: data)
+        let data = arguments["data"] as!  [String : Any]
+        Dengage.addToWithList(parameters: data)
     }
 
     /**
@@ -374,8 +375,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func removeFromWishList (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.removeFromWithList(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.removeFromWithList(parameters: data)
     }
 
     /**
@@ -383,8 +384,8 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
      */
     func search (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
         let arguments = call.arguments as! NSDictionary
-        let data = arguments["data"] as! NSMutableDictionary
-        DengageEvent.shared.search(params: data)
+        let data = arguments["data"]  as! [String : Any]
+        Dengage.search(parameters:  data)
     }
     
     /**
@@ -394,7 +395,7 @@ public class SwiftDengageFlutterPlugin: NSObject, FlutterPlugin, FlutterStreamHa
         let arguments = call.arguments as! NSDictionary
         let withData = arguments["data"] as! NSMutableDictionary
         let tableName = arguments["tableName"] as! String
-        Dengage.SendDeviceEvent(toEventTable: tableName, andWithEventDetails: withData)
+        Dengage.sendCustomEvent(eventTable: tableName, parameters:  withData as! [String : Any])
     }
     
     /**
