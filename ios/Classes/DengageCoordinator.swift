@@ -19,18 +19,15 @@ public class DengageCoordinator: NSObject {
 
     @objc(setupDengage:launchOptions:)
     public func setupDengage(key:NSString, launchOptions:NSDictionary?) {
-        Dengage.setIntegrationKey(key: key as String)
-        if (launchOptions != nil) {
-            Dengage.initWithLaunchOptions(withLaunchOptions: launchOptions as! [UIApplication.LaunchOptionsKey : Any])
-        } else {
-            Dengage.initWithLaunchOptions(withLaunchOptions: nil)
-        }
+    //    Dengage.start(apiKey: key as String,
+    //       application: application, launchOptions: launchOptions)
+
         Dengage.promptForPushNotifications()
     }
     
 
     @objc(registerForPushToken:)
     public func registerForPushToken(deviceToken: Data) {
-       Dengage.register(token: deviceToken)
+       Dengage.register(deviceToken:  deviceToken)
     }
 }
