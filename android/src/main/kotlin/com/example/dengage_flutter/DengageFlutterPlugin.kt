@@ -215,7 +215,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun setLogStatus (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val logStatus: Boolean? = call.argument("isVisible") ?: false
+      val logStatus: Boolean = call.argument("isVisible") ?: false
       Dengage.setLogStatus(logStatus)
       replySuccess(result, true)
     } catch (ex: Exception) {
@@ -228,7 +228,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun setUserPermission (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val hasPermission: Boolean? = call.argument("hasPermission") ?: false
+      val hasPermission: Boolean = call.argument("hasPermission") ?: false
       Dengage.setUserPermission(hasPermission)
       replySuccess(result, null)
     } catch (ex: Exception) {
@@ -272,12 +272,12 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    * Method to get user's ContactKey
    */
   private fun getContactKey (@NonNull call: MethodCall, @NonNull result: Result) {
-    try {
-      val contactKey = Dengage.getContactKey();
-      replySuccess(result, contactKey)
-    } catch (ex: Exception) {
-      replyError(result, "error", ex.localizedMessage, ex)
-    }
+    // try {
+      // val contactKey = Dengage.getContactKey();
+    //   replySuccess(result, contactKey)
+    // } catch (ex: Exception) {
+      replyError(result, "error", "Get contact key not available on android")
+    // }
   }
 
   /**
@@ -309,7 +309,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun pageView (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.pageView(data)
       replySuccess(result, true)
     } catch (ex: Exception) {
@@ -322,7 +322,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun addToCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.addToCart(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -335,7 +335,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun removeFromCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.removeFromCart(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -348,7 +348,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun viewCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.viewCart(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -361,7 +361,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun beginCheckout (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.beginCheckout(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -374,7 +374,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun placeOrder (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.order(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -387,7 +387,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun cancelOrder (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.cancelOrder(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -400,7 +400,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun addToWishList (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.addToWishList(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -413,7 +413,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun removeFromWishList (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.removeFromWishList(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -426,7 +426,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun search (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       Dengage.search(data)
       replySuccess(result, true)
     } catch (ex: Exception){
@@ -439,7 +439,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun sendDeviceEvent (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any>? = call.argument("data")
+      val data: Map<String, Any> = call.argument("data")
       val tableName: String = call.argument("tableName")!!
       Dengage.sendDeviceEvent(tableName, data)
       replySuccess(result, true)
