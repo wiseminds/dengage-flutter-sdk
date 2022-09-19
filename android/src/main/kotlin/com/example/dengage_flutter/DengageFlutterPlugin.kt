@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
-import com.dengage.sdk.DengageEvent
+// import com.dengage.sdk.DengageEvent
 import com.dengage.sdk.callback.DengageCallback
 import com.dengage.sdk.callback.DengageError
 import com.dengage.sdk.Dengage
@@ -107,9 +107,10 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
       "dEngage#setInboxMessageAsClicked" -> this.setInboxMessageAsClicked(call, result)
       "dEngage#setNavigation" ->  this.setNavigation(call, result)
       "dEngage#setNavigationWithName" ->  this.setNavigationWithName(call, result)
-      } else {
+      else {
         result.notImplemented()
       }
+    }
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
     }
