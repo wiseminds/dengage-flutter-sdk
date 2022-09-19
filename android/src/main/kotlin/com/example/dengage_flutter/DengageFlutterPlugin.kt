@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dengage.sdk.DengageEvent
 import com.dengage.sdk.callback.DengageCallback
 import com.dengage.sdk.callback.DengageError
+import com.dengage.sdk.Dengage
 import com.dengage.sdk.domain.inboxmessage.model.InboxMessage
 import com.dengage.sdk.domain.push.model.Message
 import com.dengage.sdk.push.NotificationReceiver
