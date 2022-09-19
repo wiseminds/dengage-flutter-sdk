@@ -53,7 +53,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
                 val filter = IntentFilter()
                 filter.addAction("com.dengage.push.intent.RECEIVE")
                 filter.addAction("com.dengage.push.intent.OPEN")
-                notifReceiver = createNotifReciever(events)
+                notifReceiver = DengageNotificationReciever(events)
 
                 appContext.registerReceiver(notifReceiver, filter)
               }
@@ -114,40 +114,40 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     }
   }
 
-  private fun createNotifReciever(events: EventSink?): NotificationReceiver? {
-    return object : NotificationReceiver() {
-      override fun onReceive(context: Context?, intent: Intent) {
-        Log.d("den/Flutter", "inOnReceiveOfCreateNotifReceiver.")
-        val intentAction = intent.action
-        if (intentAction != null) {
-          when (intentAction.hashCode()) {
-            -825236177 -> {
-              if (intentAction == "com.dengage.push.intent.RECEIVE") {
-                Log.d("den/Flutter", "received new push.")
-                val message: Message = intent.getExtras()?.let { Message(it) }!!
-                if (events != null) {
-                  // todo: later when required emit seperate event for onNotificationReceived
-//                  events.success(Gson().toJson(message))
-                } else {
-                  Log.d("den/flutter", "events is null while received push")
-                }
-              }
-            }
-            -520704162 -> {
-              // intentAction == "com.dengage.push.intent.RECEIVE"
-              Log.d("den/Flutter", "push is clicked.")
-              val message: Message = intent.getExtras()?.let { Message(it) }!!
-              if (events != null) {
-                events.success(Gson().toJson(message))
-              } else {
-                Log.d("den/flutter", "events is null while clicked push")
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+//   private fun createNotifReciever(events: EventSink?): NotificationReceiver? {
+//     return object : NotificationReceiver() {
+//       override fun onReceive(context: Context?, intent: Intent) {
+//         Log.d("den/Flutter", "inOnReceiveOfCreateNotifReceiver.")
+//         val intentAction = intent.action
+//         if (intentAction != null) {
+//           when (intentAction.hashCode()) {
+//             -825236177 -> {
+//               if (intentAction == "com.dengage.push.intent.RECEIVE") {
+//                 Log.d("den/Flutter", "received new push.")
+//                 val message: Message = intent.getExtras()?.let { Message(it) }!!
+//                 if (events != null) {
+//                   // todo: later when required emit seperate event for onNotificationReceived
+// //                  events.success(Gson().toJson(message))
+//                 } else {
+//                   Log.d("den/flutter", "events is null while received push")
+//                 }
+//               }
+//             }
+//             -520704162 -> {
+//               // intentAction == "com.dengage.push.intent.RECEIVE"
+//               Log.d("den/Flutter", "push is clicked.")
+//               val message: Message = intent.getExtras()?.let { Message(it) }!!
+//               if (events != null) {
+//                 events.success(Gson().toJson(message))
+//               } else {
+//                 Log.d("den/flutter", "events is null while clicked push")
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
 
   /**
    * Method to set the integeration key.
