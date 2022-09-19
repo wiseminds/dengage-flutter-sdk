@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //  DengageFlutter.setFirebaseIntegrationKey(
-  //      'FEYl27JxJfay6TxiYCdlkP2FXeuhNfEoI8WkxI_p_l__s_l_5sLbzKmc9c88mSZxRCrLuqMK4y0e8nHajQnBt8poBNDMvNtIytYKZ6byBQZOE8kqkkgDnlye2Lb5AcW3tuIWQjYz');
+   DengageFlutter.setFirebaseIntegrationKey(
+       'FEYl27JxJfay6TxiYCdlkP2FXeuhNfEoI8WkxI_p_l__s_l_5sLbzKmc9c88mSZxRCrLuqMK4y0e8nHajQnBt8poBNDMvNtIytYKZ6byBQZOE8kqkkgDnlye2Lb5AcW3tuIWQjYz');
   // DengageFlutter.setLogStatus(true);
 
   runApp(
@@ -35,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String contactKey = '';
   var contactKeyController = TextEditingController();
-  
 
   void _onEvent(Object event) {
     print("in on Event object is: ");
@@ -56,7 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // print("setting screen name.");
     // DengageFlutter.setNavigationWithName('MainScreen');
 
-    DengageFlutter.eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
+    DengageFlutter.eventChannel
+        .receiveBroadcastStream()
+        .listen(_onEvent, onError: _onError);
 
     super.initState();
   }
@@ -161,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         label: 'copy token',
                         onPressed: () {
                           Clipboard.setData(new ClipboardData(text: token));
-                          },
+                        },
                       ),
                     ),
                   );
@@ -205,16 +206,17 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: 10.0),
               child: ElevatedButton(
                 onPressed: () async {
-                    DengageFlutter.setNavigationWithName('MainScreen');
+                  DengageFlutter.setNavigationWithName('MainScreen');
                 },
                 child: Text('Set Screen Name as "MainScreen"'),
               ),
             ),
-                        Container(
+            Container(
               padding: EdgeInsets.only(top: 10.0),
               child: ElevatedButton(
                 onPressed: () async {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SecondRoute()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SecondRoute()));
                 },
                 child: Text('Navigate to "SecondScreen"'),
               ),
@@ -227,12 +229,12 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class SecondRoute extends StatelessWidget {
-  SecondRoute () {
+  SecondRoute() {
     print("setting screen name as SecondScreen");
     setScreenName();
   }
 
-  setScreenName () async {
+  setScreenName() async {
     DengageFlutter.setNavigationWithName("SecondScreen");
   }
 

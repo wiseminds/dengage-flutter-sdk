@@ -1,10 +1,11 @@
-import 'dart:async'; 
+import 'dart:async';
 
 import 'package:flutter/services.dart';
 
 class DengageFlutter {
   static const MethodChannel _channel = const MethodChannel('dengage_flutter');
-static const EventChannel eventChannel = EventChannel("com.dengage.flutter/onNotificationClicked");
+  static const EventChannel eventChannel =
+      EventChannel("com.dengage.flutter/onNotificationClicked");
 
   // iOS only
   static Future<bool?> setIntegerationKey(String key) async {

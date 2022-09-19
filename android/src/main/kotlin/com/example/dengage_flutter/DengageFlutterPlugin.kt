@@ -6,8 +6,10 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import com.dengage.sdk.DengageEvent
 import com.dengage.sdk.callback.DengageCallback
-import com.dengage.sdk.models.DengageError
-import com.dengage.sdk.models.InboxMessage
+import com.dengage.sdk.callback.DengageError
+import com.dengage.sdk.domain.inboxmessage.model.InboxMessage
+import com.dengage.sdk.domain.push.model.Message
+import com.dengage.sdk.push.NotificationReceiver
 import com.google.gson.Gson
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -20,10 +22,8 @@ import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.EventChannel.EventSink;
 import io.flutter.plugin.common.EventChannel.StreamHandler;
 import android.content.Intent
-import com.dengage.sdk.NotificationReceiver
 import android.content.IntentFilter
 import android.util.Log
-import com.dengage.sdk.models.Message
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import org.json.JSONObject
@@ -77,61 +77,35 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      if (call.method == "dEngage#setIntegerationKey") {
-        setIntegerationKey(call, result)
-      }
-      else if (call.method == "dEngage#setContactKey") {
-        setContactKey(call, result)
-      } else if (call.method == "dEngage#setHuaweiIntegrationKey") {
-        this.setHuaweiIntegrationKey(call, result)
-      } else if (call.method == "dEngage#setFirebaseIntegrationKey") {
-        this.setFirebaseIntegrationKey(call, result)
-      } else if (call.method == "dEngage#setLogStatus") {
-        this.setLogStatus(call, result)
-      } else if (call.method == "dEngage#setPermission") {
-        this.setUserPermission(call, result)
-      } else if (call.method == "dEngage#setToken") {
-        this.setToken(call, result)
-      } else if (call.method == "dEngage#getToken") {
-        this.getToken(call, result)
-      } else if (call.method == "dEngage#getContactKey") {
-        this.getContactKey(call, result)
-      } else if (call.method == "dEngage#getUserPermission") {
-        this.getUserPermission(call, result)
-      } else if (call.method == "dEngage#getSubscription") {
-        this.getSubscription(call, result)
-      } else if (call.method == "dEngage#pageView") {
-        this.pageView(call, result)
-      } else if (call.method == "dEngage#addToCart") {
-        this.addToCart(call, result)
-      } else if (call.method == "dEngage#removeFromCart") {
-        this.removeFromCart(call, result)
-      } else if (call.method == "dEngage#viewCart") {
-        this.viewCart(call, result)
-      } else if (call.method == "dEngage#beginCheckout") {
-        this.beginCheckout(call, result)
-      } else if (call.method == "dEngage#placeOrder") {
-        this.placeOrder(call, result)
-      } else if (call.method == "dEngage#cancelOrder") {
-        this.cancelOrder(call, result)
-      } else if (call.method == "dEngage#addToWishList") {
-        this.addToWishList(call, result)
-      } else if (call.method == "dEngage#removeFromWishList") {
-        this.removeFromWishList(call, result)
-      } else if (call.method == "dEngage#search") {
-        this.search(call, result)
-      } else if (call.method == "dEngage#sendDeviceEvent") {
-        this.sendDeviceEvent(call, result)
-      } else if (call.method == "dEngage#getInboxMessages") {
-        this.getInboxMessages(call, result)
-      } else if (call.method == "dEngage#deleteInboxMessage") {
-        this.deleteInboxMessage(call, result)
-      } else if (call.method == "dEngage#setInboxMessageAsClicked") {
-        this.setInboxMessageAsClicked(call, result)
-      } else if (call.method == "dEngage#setNavigation") {
-        this.setNavigation(call, result)
-      } else if (call.method == "dEngage#setNavigationWithName") {
-        this.setNavigationWithName(call, result)
+
+      when (call.method) {
+      "dEngage#setIntegerationKey" ->  setIntegerationKey(call, result)
+      "dEngage#setHuaweiIntegrationKey" -> this.setHuaweiIntegrationKey(call, result)
+      "dEngage#setFirebaseIntegrationKey" -> this.setFirebaseIntegrationKey(call, result)
+      "dEngage#setLogStatus" ->  this.setLogStatus(call, result)
+      "dEngage#setPermission" -> this.setUserPermission(call, result)
+      "dEngage#setToken" ->  this.setToken(call, result)
+      "dEngage#getToken" -> this.getToken(call, result)
+      "dEngage#setContactKey" -> setContactKey(call, result) 
+      "dEngage#getContactKey" ->  this.getContactKey(call, result)
+      "dEngage#getUserPermission" -> this.getUserPermission(call, result)
+      "dEngage#getSubscription" -> this.getSubscription(call, result)
+      "dEngage#pageView" -> this.pageView(call, result)
+      "dEngage#addToCart" -> this.addToCart(call, result)
+      "dEngage#removeFromCart" -> this.removeFromCart(call, result)
+      "dEngage#viewCart" -> this.viewCart(call, result)
+      "dEngage#beginCheckout" ->   this.beginCheckout(call, result) 
+      "dEngage#placeOrder" -> this.placeOrder(call, result)
+      "dEngage#cancelOrder" ->   this.cancelOrder(call, result)
+      "dEngage#addToWishList" -> this.addToWishList(call, result)  
+      "dEngage#removeFromWishList" -> this.removeFromWishList(call, result)
+      "dEngage#search" -> this.search(call, result)
+      "dEngage#sendDeviceEvent" -> this.sendDeviceEvent(call, result)
+      "dEngage#getInboxMessages" -> this.getInboxMessages(call, result)
+      "dEngage#deleteInboxMessage" -> this.deleteInboxMessage(call, result)
+      "dEngage#setInboxMessageAsClicked" -> this.setInboxMessageAsClicked(call, result)
+      "dEngage#setNavigation" ->  this.setNavigation(call, result)
+      "dEngage#setNavigationWithName" ->  this.setNavigationWithName(call, result)
       } else {
         result.notImplemented()
       }
@@ -194,7 +168,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     try {
       val contactKey: String? = call.argument("contactKey")
       if (contactKey != null) {
-        DengageCoordinator.sharedInstance.dengageManager?.setContactKey(contactKey)
+        Dengage.setContactKey(contactKey)
         replySuccess(result, true)
       } else {
         throw Exception("required argument 'contactKey' is missing.");
@@ -211,7 +185,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     try {
       val key: String? = call.argument("key")
       if (key != null) {
-        DengageCoordinator.sharedInstance.dengageManager?.setHuaweiIntegrationKey(key)
+        Dengage.setHuaweiIntegrationKey(key)
       } else {
         throw Exception("required arugment 'key' is missing.")
       }
@@ -227,7 +201,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     try {
       val key: String? = call.argument("key")
       if (key != null) {
-        DengageCoordinator.sharedInstance.dengageManager?.setFirebaseIntegrationKey(key)
+        Dengage.setFirebaseIntegrationKey(key)
       } else {
         throw Exception("required arugment 'key' is missing.")
       }
@@ -242,7 +216,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun setLogStatus (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val logStatus: Boolean? = call.argument("isVisible") ?: false
-      DengageCoordinator.sharedInstance.dengageManager?.setLogStatus(logStatus)
+      Dengage.setLogStatus(logStatus)
       replySuccess(result, true)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -255,7 +229,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun setUserPermission (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val hasPermission: Boolean? = call.argument("hasPermission") ?: false
-      DengageCoordinator.sharedInstance.dengageManager?.setPermission(hasPermission)
+      Dengage.setUserPermission(hasPermission)
       replySuccess(result, null)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -269,7 +243,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     try {
       val token: String? = call.argument("token")
       if (token != null) {
-        DengageCoordinator.sharedInstance.dengageManager?.subscription?.token = token
+        Dengage.setToken(token)
       } else {
         throw Exception("required argument 'token' is missing.")
       }
@@ -283,7 +257,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun getToken (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val token = DengageCoordinator.sharedInstance.dengageManager?.subscription?.token
+      val token = Dengage.getToken()
       if (token !== null) {
         replySuccess(result, token)
         return
@@ -299,7 +273,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun getContactKey (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val contactKey = DengageCoordinator.sharedInstance.dengageManager?.subscription?.contactKey
+      val contactKey = Dengage.getContactKey();
       replySuccess(result, contactKey)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -311,7 +285,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun getUserPermission (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val userPermission = DengageCoordinator.sharedInstance.dengageManager?.subscription?.permission
+      val userPermission = Dengage.getUserPermission()
       replySuccess(result, userPermission)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -323,7 +297,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun getSubscription (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val subscription = DengageCoordinator.sharedInstance.dengageManager?.subscription
+      val subscription = Dengage.getSubscription()
       replySuccess(result, Gson().toJson(subscription))
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -336,7 +310,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun pageView (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).pageView(data)
+      Dengage.pageView(data)
       replySuccess(result, true)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -349,7 +323,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun addToCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).addToCart(data)
+      Dengage.addToCart(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -362,7 +336,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun removeFromCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).removeFromCart(data)
+      Dengage.removeFromCart(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -375,7 +349,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun viewCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).viewCart(data)
+      Dengage.viewCart(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -388,7 +362,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun beginCheckout (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).beginCheckout(data)
+      Dengage.beginCheckout(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -401,7 +375,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun placeOrder (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).order(data)
+      Dengage.order(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -414,7 +388,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun cancelOrder (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).cancelOrder(data)
+      Dengage.cancelOrder(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -427,7 +401,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun addToWishList (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).addToWishList(data)
+      Dengage.addToWishList(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -440,7 +414,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun removeFromWishList (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).removeFromWishList(data)
+      Dengage.removeFromWishList(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -453,7 +427,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun search (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val data: Map<String, Any>? = call.argument("data")
-      DengageEvent.getInstance(appContext).search(data)
+      Dengage.search(data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -467,7 +441,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     try {
       val data: Map<String, Any>? = call.argument("data")
       val tableName: String = call.argument("tableName")!!
-      DengageEvent.getInstance(appContext).sendDeviceEvent(tableName, data)
+      Dengage.sendDeviceEvent(tableName, data)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -490,7 +464,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
           replySuccess(result, Gson().toJson(response))
         }
       }
-      DengageCoordinator.sharedInstance.dengageManager?.getInboxMessages(limit, offset, callback)
+      Dengage.getInboxMessages(limit, offset, callback)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
     }
@@ -502,7 +476,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun deleteInboxMessage (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val id: String = call.argument("id")!!
-      DengageCoordinator.sharedInstance.dengageManager!!.deleteInboxMessage(id)
+      Dengage.deleteInboxMessage(id)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -515,7 +489,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun setInboxMessageAsClicked (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val id: String = call.argument("id")!!
-      DengageCoordinator.sharedInstance.dengageManager!!.setInboxMessageAsClicked(id)
+      Dengage.setInboxMessageAsClicked(id)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -527,7 +501,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun setNavigation (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      DengageCoordinator.sharedInstance.dengageManager!!.setNavigation(appActivity as AppCompatActivity)
+      Dengage.setNavigation(appActivity as AppCompatActivity)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -540,7 +514,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
   private fun setNavigationWithName (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
       val screenName: String = call.argument("screenName")!!
-      DengageCoordinator.sharedInstance.dengageManager!!.setNavigation(appActivity as AppCompatActivity, screenName)
+      Dengage.setNavigation(appActivity as AppCompatActivity, screenName)
       replySuccess(result, true)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -559,3 +533,4 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
     // todo: could be used for clearing app Activity.
   }
 }
+
