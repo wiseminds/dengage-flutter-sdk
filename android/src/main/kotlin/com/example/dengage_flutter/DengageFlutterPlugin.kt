@@ -88,7 +88,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
       "dEngage#setToken" ->  this.setToken(call, result)
       "dEngage#getToken" -> this.getToken(call, result)
       "dEngage#setContactKey" -> setContactKey(call, result) 
-      "dEngage#getContactKey" ->  this.getContactKey(call, result)
+      // "dEngage#getContactKey" ->  this.getContactKey(call, result)
       "dEngage#getUserPermission" -> this.getUserPermission(call, result)
       "dEngage#getSubscription" -> this.getSubscription(call, result)
       "dEngage#pageView" -> this.pageView(call, result)
@@ -276,7 +276,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
       // val contactKey = Dengage.getContactKey();
     //   replySuccess(result, contactKey)
     // } catch (ex: Exception) {
-      replyError(result, "error", "Get contact key not available on android")
+      // replyError(result, "error", "Get contact key not available on android")
     // }
   }
 
@@ -309,8 +309,9 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun pageView (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.pageView(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+
+      Dengage.pageView(data!!)
       replySuccess(result, true)
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
@@ -322,8 +323,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun addToCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.addToCart(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.addToCart(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -335,8 +336,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun removeFromCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.removeFromCart(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.removeFromCart(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -348,8 +349,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun viewCart (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.viewCart(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.viewCart(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -361,8 +362,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun beginCheckout (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.beginCheckout(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.beginCheckout(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -374,8 +375,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun placeOrder (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.order(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.order(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -387,8 +388,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun cancelOrder (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.cancelOrder(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.cancelOrder(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -400,8 +401,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun addToWishList (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.addToWishList(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.addToWishList(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -413,8 +414,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun removeFromWishList (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.removeFromWishList(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.removeFromWishList(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -426,8 +427,8 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun search (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
-      Dengage.search(data)
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
+      Dengage.search(data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -439,9 +440,9 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
    */
   private fun sendDeviceEvent (@NonNull call: MethodCall, @NonNull result: Result) {
     try {
-      val data: Map<String, Any> = call.argument("data")
+      val data: HashMap<String, Any>? = HashMap(call.argument("data"))
       val tableName: String = call.argument("tableName")!!
-      Dengage.sendDeviceEvent(tableName, data)
+      Dengage.sendDeviceEvent(tableName, data!!)
       replySuccess(result, true)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
@@ -464,7 +465,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
           replySuccess(result, Gson().toJson(response))
         }
       }
-      Dengage.getInboxMessages(limit, offset, callback)
+      //TODO: Dengage.getInboxMessages(limit, offset, callback)
     } catch (ex: Exception){
       replyError(result, "error", ex.localizedMessage, ex)
     }

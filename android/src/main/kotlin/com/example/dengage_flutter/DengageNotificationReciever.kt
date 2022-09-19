@@ -10,18 +10,18 @@ import android.content.IntentFilter
 import io.flutter.plugin.common.EventChannel.EventSink;
 
 
-open class DengageNotificationReciever(_events: EventSink?) : NotificationReceiver {
+open class DengageNotificationReciever(_events: EventSink?) : NotificationReceiver() {
  val events = _events
  
     override fun  onReceive(context: Context, intent: Intent?) {
         Log.d("den/Flutter", "inOnReceiveOfCreateNotifReceiver.")
-        val intentAction = intent.action
+        val intentAction = intent?.action
         if (intentAction != null) {
           when (intentAction.hashCode()) {
             -825236177 -> {
               if (intentAction == "com.dengage.push.intent.RECEIVE") {
                 Log.d("den/Flutter", "received new push.")
-                val message: Message = intent.getExtras()?.let { Message(it) }!!
+                val message: Message = intent?.getExtras()?.let { Message.createFromIntent(it) }!!
                 if (events != null) {
                   // todo: later when required emit seperate event for onNotificationReceived
 //                  events.success(Gson().toJson(message))
@@ -33,7 +33,7 @@ open class DengageNotificationReciever(_events: EventSink?) : NotificationReceiv
             -520704162 -> {
               // intentAction == "com.dengage.push.intent.RECEIVE"
               Log.d("den/Flutter", "push is clicked.")
-              val message: Message = intent.getExtras()?.let { Message(it) }!!
+              val message: Message = intent?.getExtras()?.let { Message.createFromIntent(it) }!!
               if (events != null) {
                 events.success(Gson().toJson(message))
               } else {
