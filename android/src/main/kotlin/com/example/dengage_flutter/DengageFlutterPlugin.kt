@@ -107,9 +107,7 @@ class DengageFlutterPlugin: FlutterPlugin, MethodCallHandler, DengageResponder()
       "dEngage#setInboxMessageAsClicked" -> this.setInboxMessageAsClicked(call, result)
       "dEngage#setNavigation" ->  this.setNavigation(call, result)
       "dEngage#setNavigationWithName" ->  this.setNavigationWithName(call, result)
-      else {
-        result.notImplemented()
-      }
+      else -> result.notImplemented()
     }
     } catch (ex: Exception) {
       replyError(result, "error", ex.localizedMessage, ex)
