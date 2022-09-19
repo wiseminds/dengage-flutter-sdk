@@ -12,7 +12,7 @@ import io.flutter.plugin.common.EventChannel.EventSink;
 
 open class DengageNotificationReciever(events: EventSink?) : NotificationReceiver {
 
-    override fun onReceive(context: Context?, intent: Intent) {
+    override fun  onReceive(context: Context, intent: Intent?) {
         Log.d("den/Flutter", "inOnReceiveOfCreateNotifReceiver.")
         val intentAction = intent.action
         if (intentAction != null) {
