@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:collection';
 
 import 'package:dengage_flutter/dengage_flutter.dart';
@@ -7,8 +6,8 @@ import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   DengageFlutter.setFirebaseIntegrationKey(
-       'FEYl27JxJfay6TxiYCdlkP2FXeuhNfEoI8WkxI_p_l__s_l_5sLbzKmc9c88mSZxRCrLuqMK4y0e8nHajQnBt8poBNDMvNtIytYKZ6byBQZOE8kqkkgDnlye2Lb5AcW3tuIWQjYz');
+  DengageFlutter.setFirebaseIntegrationKey(
+      'FEYl27JxJfay6TxiYCdlkP2FXeuhNfEoI8WkxI_p_l__s_l_5sLbzKmc9c88mSZxRCrLuqMK4y0e8nHajQnBt8poBNDMvNtIytYKZ6byBQZOE8kqkkgDnlye2Lb5AcW3tuIWQjYz');
   // DengageFlutter.setLogStatus(true);
 
   runApp(
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -36,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String contactKey = '';
   var contactKeyController = TextEditingController();
 
-  void _onEvent(Object event) {
+  void _onEvent(Object? event) {
     print("in on Event object is: ");
     print(event);
   }
@@ -50,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     DengageFlutter.getContactKey().then((value) {
       print("dengageContactKey: $value");
-      contactKeyChanged(value);
+      contactKeyChanged(value ?? '');
     });
     // print("setting screen name.");
     // DengageFlutter.setNavigationWithName('MainScreen');
@@ -136,10 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: 10.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  String msg = await DengageFlutter.getContactKey();
+                  var msg = await DengageFlutter.getContactKey();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(msg),
+                      content: Text(msg ?? ''),
                       action: SnackBarAction(
                         label: 'Ok',
                         onPressed: () {},
@@ -154,14 +153,15 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: 10.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  String token = await DengageFlutter.getToken();
+                  var token = await DengageFlutter.getToken();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('token: $token'),
                       action: SnackBarAction(
                         label: 'copy token',
                         onPressed: () {
-                          Clipboard.setData(new ClipboardData(text: token));
+                          Clipboard.setData(
+                              new ClipboardData(text: token ?? ''));
                         },
                       ),
                     ),
@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.only(top: 10.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  Map data = new HashMap<String, dynamic>();
+                  var data = new HashMap<String, dynamic>();
                   data["name"] = "Nawaz";
                   await DengageFlutter.sendDeviceEvent("tableName", data);
                 },
