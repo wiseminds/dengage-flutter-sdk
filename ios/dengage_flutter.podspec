@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.platform = :ios, '8.0'
   s.source           = { :git => 'https://github.com/dengage-tech/dengage-ios-sdk.git', :tag => s.version.to_s }
 
-  s.dependency 'Dengage', '~> 5.0.0'
+  s.dependency 'Dengage', '~> 5.28.1'
   s.dependency "Dengage.Framework.Extensions", '1.0.10'
 
   # Flutter.framework does not contain a i386 slice.
